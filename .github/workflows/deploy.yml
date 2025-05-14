@@ -8,17 +8,31 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1) Bajamos el código
       - uses: actions/checkout@v3
 
+      # 2) Instalamos Heroku CLI
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Log in to Heroku Container Registry
+      # 3) Login en Heroku usando la API key
+      - name: Heroku Login
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          # stdin login para la CLI
+          echo "$HEROKU_API_KEY" | heroku login --stdin
+
+      # 4) Login en Container Registry
+      - name: Heroku Container Registry Login
         run: heroku container:login
 
-      - name: Push & Release Docker image
+      # 5) (Opcional) Aseguramos que la app use el stack de contenedores
+      - name: Set heroku stack to container
+        run: heroku stack:set container -a distribuida
+
+      # 6) Construimos, push y release
+      - name: Build, Push & Release Docker image
         run: |
-          heroku container:push web -a distribuida
+          heroku container:push web  -a distribuida
           heroku container:release web -a distribuida
