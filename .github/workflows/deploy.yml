@@ -24,6 +24,15 @@ jobs:
           echo "machine registry.heroku.com login _ password $HEROKU_API_KEY" >> ~/.netrc
           chmod 600 ~/.netrc
 
+      # 2) Después de hacer heroku container:push y antes de heroku container:release:
+      - name: Tag & Push to Docker Hub
+        run: |
+          # Etiquetamos la imagen que Heroku CLI dejó localmente
+          docker tag registry.heroku.com/distribuida/web \
+                     $DOCKERHUB_USERNAME/heroku-hola-mundo:latest
+          # Empujamos a Docker Hub
+          docker push $DOCKERHUB_USERNAME/heroku-hola-mundo:latest
+
       # 2) Login al Container Registry (ahora sí)
       - name: Heroku Container Registry Login
         run: heroku container:login
