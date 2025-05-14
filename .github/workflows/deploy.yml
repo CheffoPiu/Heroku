@@ -24,6 +24,15 @@ jobs:
           echo "machine registry.heroku.com login _ password $HEROKU_API_KEY" >> ~/.netrc
           chmod 600 ~/.netrc
 
+      # 2) Login al Container Registry (ahora sí)
+      - name: Heroku Container Registry Login
+        run: heroku container:login
+
+
+      # 3) Aseguramos el stack de contenedores
+      - name: Set heroku stack to container
+        run: heroku stack:set container -a distribuida
+
       # 2) Después de hacer heroku container:push y antes de heroku container:release:
       - name: Tag & Push to Docker Hub
         run: |
@@ -32,14 +41,6 @@ jobs:
                      $DOCKERHUB_USERNAME/distribuida:latest
           # Empujamos a Docker Hub
           docker push $DOCKERHUB_USERNAME/distribuida:latest
-
-      # 2) Login al Container Registry (ahora sí)
-      - name: Heroku Container Registry Login
-        run: heroku container:login
-
-      # 3) Aseguramos el stack de contenedores
-      - name: Set heroku stack to container
-        run: heroku stack:set container -a distribuida
 
       # 4) Build, Push & Release
       - name: Build, Push & Release Docker image
