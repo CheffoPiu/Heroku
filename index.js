@@ -4,7 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-  res.send('¡Hola Mundo desde Herokus Docker!');
+  res.send('¡Hola Mundo desde Herokuss Docker!');
 });
 
 app.listen(PORT, () => {
