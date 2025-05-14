@@ -29,9 +29,9 @@ jobs:
         run: |
           # Etiquetamos la imagen que Heroku CLI dejó localmente
           docker tag registry.heroku.com/distribuida/web \
-                     $DOCKERHUB_USERNAME/heroku-distribuida:latest
+                     $DOCKERHUB_USERNAME/distribuida:latest
           # Empujamos a Docker Hub
-          docker push $DOCKERHUB_USERNAME/heroku-distribuida:latest
+          docker push $DOCKERHUB_USERNAME/distribuida:latest
 
       # 2) Login al Container Registry (ahora sí)
       - name: Heroku Container Registry Login
