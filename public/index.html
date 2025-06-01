@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -36,9 +36,104 @@
 
   <hr style="margin: 40px 0;">
 
-  <!-- Botón para regresar a esta misma página desde cualquier otro sitio -->
-  <button onclick="window.history.back();">
+  <Botón para regresar a esta misma página desde cualquier otro sitio -->
+  <!--button onclick="window.history.back();">
     ◀️ Regresar
   </button>
 </body>
+</html-->
+
+
+<!--DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Países del Mundo</title>
+</head>
+<body>
+  <h1>Lista de Países</h1>
+  <ul id="lista-paises"></ul>
+
+  <script>
+    fetch('http://localhost:3000/paises')
+      .then(res => res.json())
+      .then(paises => {
+        const lista = document.getElementById('lista-paises');
+        paises.forEach(pais => {
+          const item = document.createElement('li');
+          item.innerHTML = `<img src="${pais.bandera}" width="20"> <strong>${pais.nombre}</strong> - Capital: ${pais.capital}`;
+          lista.appendChild(item);
+        });
+      });
+  </script>
+</body>
+</html-->
+
+
+<!--DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Criptomonedas en Tiempo Real</title>
+  <style>
+    body { font-family: sans-serif; padding: 30px; }
+    li { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Top 10 Criptomonedas</h1>
+  <ul id="lista-criptos"></ul>
+
+  <script>
+    fetch('/criptos')
+      .then(res => res.json())
+      .then(criptos => {
+        const lista = document.getElementById('lista-criptos');
+        criptos.forEach(c => {
+          const item = document.createElement('li');
+          item.innerHTML = `<img src="${c.logo}" width="20" /> <strong>${c.nombre} (${c.simbolo})</strong> - $${c.precio}`;
+          lista.appendChild(item);
+        });
+      });
+  </script>
+</body>
+</html-->
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clima en Quito</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clima actual en Quito.</h1>
+  <div id="resultado">
+    <p>Cargando...</p>
+  </div>
+
+  <script>
+    fetch('/clima')
+      .then(res => res.json())
+      .then(data => {
+        const div = document.getElementById('resultado');
+        div.innerHTML = `
+          <h2>${data.ciudad}</h2>
+          <p>🌡️ Temperatura: <strong>${data.temperatura} °C</strong></p>
+          <p>Fuente: ${data.fuente}</p>
+        `;
+      })
+      .catch(() => {
+        document.getElementById('resultado').innerHTML = '<p>Error al obtener el clima.</p>';
+      });
+  </script>
+</body>
 </html>
+
